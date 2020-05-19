@@ -6,32 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.magulab.salim.R
-import com.magulab.salim.ui.RestAPI
 import com.magulab.salim.ui.util.inflate
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_household_appliances.*
 
 
 class HouseholdAppliancesFragment : Fragment() {
-    private val TAG = "HouseholdAppliancesFragment"
+    private val TAG = HouseholdAppliancesFragment::class.java.simpleName
 
+    private lateinit var viewModel: HouseholdAppliancesViewModel
     private val householdAppliancesList: RecyclerView by lazy {
         rv_household_appliances
     }
     private val adapter = HouseholdAppliancesAdapter()
-    var compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProvider(this).get(HouseholdAppliancesViewModel::class.java)
+        bindViewModel()
         return container?.inflate(R.layout.fragment_household_appliances)
     }
 
@@ -43,12 +42,12 @@ class HouseholdAppliancesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setData()
+        viewModel.updateItems()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        compositeDisposable.dispose()
+        viewModel.destroyViewModel()
     }
 
     private fun initView() {
@@ -56,22 +55,10 @@ class HouseholdAppliancesFragment : Fragment() {
         rv_household_appliances.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun setData() {
-        RestAPI.requestGetHouseholdAppliances()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                Log.e(TAG, "onError : " + it.message)
-            }
-            .unsubscribeOn(Schedulers.io())
-            .onErrorReturn {
-                Log.e(TAG, "onErrorReturn : " + it.message)
-                arrayListOf()
-            }
-            .subscribe { result ->
-                adapter.items.addAll(transformHouseholdAppliancesDataList(result))
-                adapter.notifyDataSetChanged()
-            }
-            .addTo(compositeDisposable)
+    private fun bindViewModel() {
+        viewModel.getItemList().observe(viewLifecycleOwner, Observer<List<HouseholdApplianceItem>> { newItems ->
+            adapter.items = newItems as MutableList<HouseholdApplianceItem>
+            adapter.notifyDataSetChanged()
+        })
     }
 }
