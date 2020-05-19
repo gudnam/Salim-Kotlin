@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.magulab.salim.R
-import com.magulab.salim.ui.util.inflate
+import com.magulab.salim.common.inflate
 import kotlinx.android.synthetic.main.fragment_household_appliances.*
 
 

@@ -1,4 +1,4 @@
-package com.magulab.salim.ui.util
+package com.magulab.salim.common
 
 import android.app.Activity
 import android.content.Intent

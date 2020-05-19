@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.magulab.salim.R
 import com.magulab.salim.ui.main.fragment.HouseholdAppliancesFragment
 import com.magulab.salim.ui.mypage.MyPageActivity
-import com.magulab.salim.ui.util.moveTo
+import com.magulab.salim.common.moveTo
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
