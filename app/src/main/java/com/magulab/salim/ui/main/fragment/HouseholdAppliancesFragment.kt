@@ -1,7 +1,6 @@
 package com.magulab.salim.ui.main.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +41,7 @@ class HouseholdAppliancesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.updateItems()
+        viewModel.requestItems()
     }
 
     override fun onDestroyView() {
@@ -56,7 +55,7 @@ class HouseholdAppliancesFragment : Fragment() {
     }
 
     private fun bindViewModel() {
-        viewModel.getItemList().observe(viewLifecycleOwner, Observer<List<HouseholdApplianceItem>> { newItems ->
+        viewModel.bindItemList().observe(viewLifecycleOwner, Observer<List<HouseholdApplianceItem>> { newItems ->
             adapter.items = newItems as MutableList<HouseholdApplianceItem>
             adapter.notifyDataSetChanged()
         })

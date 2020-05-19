@@ -16,9 +16,9 @@ class HouseholdAppliancesViewModel: ViewModel() {
 
     private var householdApplianceItemList = MutableLiveData<List<HouseholdApplianceItem>>()
 
-    fun getItemList() = householdApplianceItemList
+    fun bindItemList() = householdApplianceItemList
 
-    fun updateItems() {
+    fun requestItems() {
         RestAPI.requestGetHouseholdAppliances()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
