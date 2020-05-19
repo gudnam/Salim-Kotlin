@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.item_household_appliances.view.*
 
 class HouseholdAppliancesAdapter : RecyclerView.Adapter<HouseholdAppliancesAdapter.HouseholdAppliancesHolder>() {
 
-    var items: MutableList<HouseholdAppliancesData> = mutableListOf()
+    var items: MutableList<HouseholdAppliancesItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HouseholdAppliancesHolder(parent)
 

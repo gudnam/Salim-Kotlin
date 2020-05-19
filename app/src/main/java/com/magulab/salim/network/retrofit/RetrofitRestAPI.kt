@@ -10,10 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-class RetrofitRestAPI {
-
-    private val BASE_URL = "https://us-central1-magulab.cloudfunctions.net/"
-    private val TIMEOUT = 10L
+class RetrofitRestAPI(baseUrl: String, timeout: Long) {
 
     private val retrofit: Retrofit
     private val okHttpClient: OkHttpClient
@@ -28,14 +25,14 @@ class RetrofitRestAPI {
         okHttpClient = OkHttpClient().newBuilder().apply {
             addInterceptor(httpLogging)
             addInterceptor(HeaderSettingInterceptor())
-            connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-            writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-            readTimeout(TIMEOUT, TimeUnit.SECONDS)
+            connectTimeout(timeout, TimeUnit.SECONDS)
+            writeTimeout(timeout, TimeUnit.SECONDS)
+            readTimeout(timeout, TimeUnit.SECONDS)
 
         }.build()
 
         retrofit = Retrofit.Builder().apply {
-            baseUrl(BASE_URL)
+            baseUrl(baseUrl)
             client(okHttpClient)
             addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             addConverterFactory(GsonConverterFactory.create())

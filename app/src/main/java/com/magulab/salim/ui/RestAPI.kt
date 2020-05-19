@@ -1,15 +1,16 @@
 package com.magulab.salim.ui
 
-import android.util.Log
 import com.magulab.salim.network.data.HouseholdApplianceData
 import com.magulab.salim.network.retrofit.RetrofitRestAPI
 import com.magulab.salim.network.retrofit.RetrofitService
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 object RestAPI {
-    private val service: RetrofitService = RetrofitRestAPI().getService()
+
+    private val BASE_URL = "https://us-central1-magulab.cloudfunctions.net/"
+    private val TIMEOUT = 10L
+
+    private val service: RetrofitService = RetrofitRestAPI(BASE_URL, TIMEOUT).getService()
 
     fun requestGetHouseholdAppliances(): Single<HouseholdApplianceData> {
         return service.requestGetHouseholdAppliances()
