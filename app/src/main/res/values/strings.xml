@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Salim-Android</string>
+    <string name="salim_text">살림</string>
+    <string name="start_button_text">시작</string>
+</resources>
