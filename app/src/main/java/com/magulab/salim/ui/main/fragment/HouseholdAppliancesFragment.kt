@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.magulab.salim.R
-import com.magulab.salim.network.data.HouseholdApplianceData
 import com.magulab.salim.ui.RestAPI
 import com.magulab.salim.ui.util.inflate
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -67,16 +66,12 @@ class HouseholdAppliancesFragment : Fragment() {
             .unsubscribeOn(Schedulers.io())
             .onErrorReturn {
                 Log.e(TAG, "onErrorReturn : " + it.message)
-                HouseholdApplianceData("")
+                arrayListOf()
             }
             .subscribe { result ->
-                Log.i("TEST", "$result")
+                adapter.items.addAll(transformHouseholdAppliancesDataList(result))
+                adapter.notifyDataSetChanged()
             }
             .addTo(compositeDisposable)
-
-        adapter.items.add(HouseholdAppliancesItem("에어컨", "9일 뒤에 필터 청소"))
-        adapter.items.add(HouseholdAppliancesItem("가습기", "9일 뒤에 필터 청소"))
-        adapter.items.add(HouseholdAppliancesItem("세탁기", "9일 뒤에 필터 청소"))
-        adapter.notifyDataSetChanged()
     }
 }

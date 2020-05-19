@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface RetrofitService {
 
-    @GET("helloWorld")
-    fun requestGetHouseholdAppliances(): Single<HouseholdApplianceData>
+    @GET("householdAppliances")
+    fun requestGetHouseholdAppliances(): Single<List<HouseholdApplianceData>>
 
 }
